@@ -696,6 +696,96 @@ impl Enigo {
     }
 }
 
+fn key_code_for_key_string(key_string: &str) -> CGKeyCode {
+    match key_string {
+        "a" => 0,
+        "s" => 1,
+        "d" => 2,
+        "f" => 3,
+        "h" => 4,
+        "g" => 5,
+        "z" => 6,
+        "x" => 7,
+        "c" => 8,
+        "v" => 9,
+        "b" => 11,
+        "q" => 12,
+        "w" => 13,
+        "e" => 14,
+        "r" => 15,
+        "y" => 16,
+        "t" => 17,
+        "1" => 18,
+        "2" => 19,
+        "3" => 20,
+        "4" => 21,
+        "6" => 22,
+        "5" => 23,
+        "=" => 24,
+        "9" => 25,
+        "7" => 26,
+        "-" => 27,
+        "8" => 28,
+        "0" => 29,
+        "]" => 30,
+        "o" => 31,
+        "u" => 32,
+        "[" => 33,
+        "i" => 34,
+        "p" => 35,
+        "RETURN" => 36,
+        "l" => 37,
+        "j" => 38,
+        "'" => 39,
+        "k" => 40,
+        ";" => 41,
+        "\\" => 42,
+        "," => 43,
+        "/" => 44,
+        "n" => 45,
+        "m" => 46,
+        "." => 65,
+        "*" => 67,
+        "+" => 69,
+        "CLEAR" => 71,
+        "ENTER" => 76,
+        "F5" => 96,
+        "F6" => 97,
+        "F7" => 98,
+        "F3" => 99,
+        "F8" => 100,
+        "F9" => 101,
+        "F11" => 103,
+        "F13" => 105,
+        "F14" => 107,
+        "F10" => 109,
+        "F12" => 111,
+        "F15" => 113,
+        "HELP" => 114,
+        "HOME" => 115,
+        "PGUP" => 116,
+        "DELETE" => 117,
+        "F4" => 118,
+        "END" => 119,
+        "F2" => 120,
+        "PGDN" => 121,
+        "F1" => 122,
+        "LEFT" => 123,
+        "RIGHT" => 124,
+        "DOWN" => 125,
+        "UP" => 126,
+        "ESCAPE" => 53,
+        "TAB" => 48,
+        "SPACE" => 49,
+        "`" => 50,
+        _ => {
+            unreachable!()
+            //eprintln!("keyString {} Not Found. Aborting...", key_string);
+            //std::process::exit(1);
+        }
+    }
+}
+
 /// Converts a `Key` to a `CGKeyCode`
 impl TryFrom<Key> for core_graphics::event::CGKeyCode {
     type Error = ();
@@ -755,7 +845,8 @@ impl TryFrom<Key> for core_graphics::event::CGKeyCode {
             Key::VolumeDown => KeyCode::VOLUME_DOWN,
             Key::VolumeUp => KeyCode::VOLUME_UP,
             Key::VolumeMute => KeyCode::MUTE,
-            Key::Unicode(c) => get_layoutdependent_keycode(&c.to_string()),
+            
+            Key::Unicode(c) => key_code_for_key_string(&c.to_string()),
             Key::Other(v) => {
                 let Ok(v) = u16::try_from(v) else {
                     return Err(());
