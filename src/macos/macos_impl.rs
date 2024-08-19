@@ -744,7 +744,7 @@ fn key_code_for_key_string(key_string: &str) -> CGKeyCode {
         "/" => 44,
         "n" => 45,
         "m" => 46,
-        "." => 65,
+        "." => 47,
         "*" => 67,
         "+" => 69,
         "CLEAR" => 71,
